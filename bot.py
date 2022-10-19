@@ -156,3 +156,36 @@ def change_num(message):
     bot.send_message(message.chat.id, f'Введите id записи, которую нужно изменить')
     bot.register_next_step_handler(message, change_number)
 
+def change_number(message):
+    global user_id_it
+    user_id_it = message.txt
+    lg.logging.info('User entered: {user_id_it}')
+    bot.send_message(message.chat.id, f'Введите новый номер')
+    bot.register_next_step_handler(message, change_new_number)
+
+def change_new_number(message):
+    global new_number_it
+    new_number_it = message.text
+    lg.logging.info('User entered: {new_number_it}')
+    cr.update(id=user_id_it, new_number=new_number_it)
+    bot.send_message(message.chat.id, f'Контакт изменен!')
+
+def delete_contact(message):
+    if message.text == '/71':
+        lg.logging.info('The user has selected item number 7.1')
+        bot.send_message(message.chat.id, f'Введите фамилию')
+        bot.register_next_step_handler(message, delete_suranme)
+
+    elif message.text == '/72':
+        lg.logging.info('The user has selected item number 7.2')
+        bot.send_message(message.chat.id, f'Введите имя')
+        bot.register_next_step_handler(message, delete_name)
+
+    elif message.text == '/73':
+        lg.logging.info('The user has selected item number 7.3')
+        bot.send_message(message.chat.id, f'Введите номер телефона')
+        bot.register_next_step_handler(message, delete_num)
+
+    else:
+        bot.send_message(message.chat.id, f'Введите: /help.')
+
