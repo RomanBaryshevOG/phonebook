@@ -154,4 +154,3 @@ def checking_the_number(arg):
         arh = input('Введите соответсвенный пункт меню: ')
     return int(arg)
 
-                
