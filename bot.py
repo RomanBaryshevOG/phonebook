@@ -174,7 +174,7 @@ def delete_contact(message):
     if message.text == '/71':
         lg.logging.info('The user has selected item number 7.1')
         bot.send_message(message.chat.id, f'Введите фамилию')
-        bot.register_next_step_handler(message, delete_suranme)
+        bot.register_next_step_handler(message, delete_surname)
 
     elif message.text == '/72':
         lg.logging.info('The user has selected item number 7.2')
@@ -189,3 +189,36 @@ def delete_contact(message):
     else:
         bot.send_message(message.chat.id, f'Введите: /help.')
 
+def delete_surname(message):
+    global surname_it
+    surname_it = message.text
+    lg.logging.info('User entered: {surname_it}')
+    bot.send_message(message.chat.id, f'{cr.retrive(surname=surname_it)}')
+    bot.send_message(message.chat.id, f'Введите id записи, которую нужно удалить')
+    bot.register_next_step_handler(message, delete_number)
+
+def delete_name(message):
+    global name_it
+    name_it = message.text
+    lg.logging.info('User entered: {name_it}')
+    bot.send_message(message.chat.id, f'{cr.retrive(name=name_it)}')
+    bot.send_message(message.chat.id, f'Введите id записи, которую нужно удалить')
+    bot.register_next_step_handler(message, delete_number)
+
+def delete_num(message):
+    global number_it
+    number_it = message.text
+    lg.logging.info('User entered: {number_it}')
+    bot.send_message(message.chat.id, f'{cr.retrive(number=number_it)}')
+    bot.send_messgae(message.chat.it, f'Введите id записи, которую нужно удалить')
+    bot.register_next_step_handler(message, delete_number)
+
+def delete_number(message):
+    global user_id_it
+    user_id_it = message.text
+    lg.logging.info('User entered: {user_id_it}')
+    cr.delete(id=user_id_it)
+    bot.send_message(message.chat.id, f'Контакт удален')
+
+print('server start')
+bot.infinity_polling()
